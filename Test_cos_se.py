@@ -1,6 +1,3 @@
-#  -*-coding:utf8;-*-
-#  qpy:3
-#  qpy:console
 import math
 import random
 from math import pi
