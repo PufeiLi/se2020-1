@@ -1,15 +1,20 @@
-function e=Test_sin_se()
-a=round(rand(1,1000)*360);%²úÉú1000¸ö0-360Ö®¼äµÄÊý
-%b=sind(a);%ÒÔ½Ç¶ÈÖÆ¼ÆËãsinº¯Êý£¬sindÊÇMATLAB¹ÌÓÐº¯Êý
+function [avgError,flag]=Test_sin_se()
+a=round(rand(1,1000)*360);%äº§ç”Ÿ1000ä¸ª0-360ä¹‹é—´çš„æ•°
+%b=sind(a);%ä»¥è§’åº¦åˆ¶è®¡ç®—sinå‡½æ•°ï¼Œsindæ˜¯MATLABå›ºæœ‰å‡½æ•°
 t1=0;
 T=length(a);
-for i=1:T %±È½Ï£¬¼ÆËã´íÎóµÄ¸öÊý
+for i=1:T %æ¯”è¾ƒï¼Œè®¡ç®—é”™è¯¯çš„ä¸ªæ•°
     b(i)=sind(a(i));
     c(i) = sin_se( a(i) );
-    if b(i)~=c(i)
-        t1=t1+1;
-    end
+    erro(i)=abs(b(i)-c(i));%æ¯æ¬¡è¯¯å·®
 end
-   erro=t1/T;    
-   e=erro;
+for j=1:T
+if erro(j)>0.001
+      flag=1;
+      break;
+  else
+      flag=0;
+end
+ end
+ avgError=sum(erro)/T;
 end
