@@ -1,15 +1,25 @@
-function e=Test_cot_se()
-a=round(rand(1,1000)*360);%²úÉú1000¸ö0-360Ö®¼äµÄÊý
-%b=tand(a);%ÒÔ½Ç¶ÈÖÆ¼ÆËãtanº¯Êý£¬tandÊÇMATLAB¹ÌÓÐº¯Êý
+function [avgError,flag]=Test_cos_se()
+a=round(rand(1,1000)*360);%äº§ç”Ÿ1000ä¸ª0-360ä¹‹é—´çš„æ•°
+%b=tand(a);%ä»¥è§’åº¦åˆ¶è®¡ç®—tanå‡½æ•°ï¼Œtandæ˜¯MATLABå›ºæœ‰å‡½æ•°
 t=0;
 T=length(a);
-for i=1:T %±È½Ï£¬¼ÆËã´íÎóµÄ¸öÊý
+for i=1:T %æ¯”è¾ƒï¼Œè®¡ç®—é”™è¯¯çš„ä¸ªæ•°
     b(i)=1/tand(a(i));
     c(i) = cot_se( a(i) );
-    if b(i)~=c(i)
-        t=t+1;
+    if abs(b(i))==Inf&&abs(c(i))==Inf
+        erro(i)=0;
+    else
+     erro(i)=abs(b(i)-c(i));%æ¯æ¬¡è¯¯å·®
     end
 end
-  erro=t/T;    
-  e=erro;
+  
+for j=1:T
+if erro(j)>0.001
+      flag=1;
+      break;
+  else
+      flag=0;
+end
+end
+ avgError=sum(erro)/T;
 end
