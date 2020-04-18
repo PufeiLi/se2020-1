@@ -1,15 +1,19 @@
-function e=Test_cos_se()
-a=round(rand(1,1000)*360);%²úÉú1000¸ö0-360Ö®¼äµÄÊý
-%b=cosd(a);%ÒÔ½Ç¶ÈÖÆ¼ÆËãcosº¯Êý£¬cosdÊÇMATLAB¹ÌÓÐº¯Êý
-t=0;
+function [avgError,flag]=Test_cos_se()
+a=round(rand(1,1000)*360);%äº§ç”Ÿ1000ä¸ª0-360ä¹‹é—´çš„æ•°
+%b=cosd(a);%ä»¥è§’åº¦åˆ¶è®¡ç®—coså‡½æ•°ï¼Œcosdæ˜¯MATLABå›ºæœ‰å‡½æ•°
 T=length(a);
-for i=1:T %±È½Ï£¬¼ÆËã´íÎóµÄ¸öÊý
+for i=1:T %æ¯”è¾ƒï¼Œè®¡ç®—é”™è¯¯çš„ä¸ªæ•°
     b(i)=cosd(a(i));
     c(i) = cos_se( a(i) );
-    if b(i)~=c(i)
-        t=t+1;
-    end
+    erro(i)=abs(b(i)-c(i));%æ¯æ¬¡è¯¯å·®
 end
-  erro=t/T; 
-  e=erro;
+for j=1:T
+if erro(j)>0.001
+      flag=1;
+      break;
+  else
+      flag=0;
+end
+ end
+ avgError=sum(erro)/T;
 end
