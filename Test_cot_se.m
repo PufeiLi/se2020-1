@@ -6,11 +6,7 @@ T=length(a);
 for i=1:T %比较，计算错误的个数
     b(i)=1/tand(a(i));
     c(i) = cot_se( a(i) );
-    if abs(b(i))==Inf&&abs(c(i))==Inf
-        erro(i)=0;
-    else
-     erro(i)=abs(b(i)-c(i));%每次误差
-    end
+    erro(i)=abs(b(i)-c(i));%每次误差
 end
   
 for j=1:T

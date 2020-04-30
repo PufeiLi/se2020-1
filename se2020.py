@@ -1,8 +1,8 @@
 #! /usr/bin/env python   
 # -*- coding: utf-8 -*-  
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8') 
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 from tkinter import *
 import numpy as np
@@ -21,23 +21,6 @@ root = Tk()
 #调用matlab中m文件函数
 eng = matlab.engine.start_matlab()
 
-#调用c语言文件中函数
-sin_c = CDLL('./sin_se.so')
-cos_c = CDLL('./cos_se.so')
-tan_c = CDLL('./tan_se.so')
-cot_c = CDLL('./cot_se.so')
-
-sin_se_c = sin_c.sin_se
-sin_se_c.restype = c_float
-
-cos_se_c = cos_c.cos_se
-cos_se_c.restype = c_float
-
-tan_se_c = tan_c.tan_se
-tan_se_c.restype = c_float
-
-cot_se_c = cot_c.cot_se
-cot_se_c.restype = c_float
 
 sv0=StringVar()    #sv0为输入
 sv1=StringVar()    #sv1~4为matlab语言的输出
@@ -48,10 +31,7 @@ sv5=StringVar()    #sv5~8为python语言的输出
 sv6=StringVar()
 sv7=StringVar()
 sv8=StringVar() 
-sv9=StringVar()    #sv9~12为c语言的输出
-sv10=StringVar()
-sv11=StringVar()
-sv12=StringVar()
+
 
 #界面编写
 l1=Label(text="三角函数计算",font=('KaiTi',12,'bold'))
@@ -120,30 +100,6 @@ o8.config(textvariable=sv8, state='readonly')
 out8=Label(text="cot:",font=('KaiTi',12,'bold'))
 out8.grid(row=14,column=0)
 
-#输出网格,c语言
-in1=Label(text="c语言：",font=('KaiTi',12,'bold'))
-in1.grid(row=15,column=0)
-
-o9=Entry()
-o9.grid(row=16,column=1)
-o9.config(textvariable=sv9, state='readonly')
-out9=Label(text="sin:",font=('KaiTi',12,'bold'))
-out9.grid(row=16,column=0)
-o10=Entry()
-o10.grid(row=17,column=1)
-o10.config(textvariable=sv10, state='readonly')
-out10=Label(text="cos:",font=('KaiTi',12,'bold'))
-out10.grid(row=17,column=0)
-o11=Entry()
-o11.grid(row=18,column=1)
-o11.config(textvariable=sv11, state='readonly')
-out11=Label(text="tan:",font=('KaiTi',12,'bold'))
-out11.grid(row=18,column=0)
-o12=Entry()
-o12.grid(row=19,column=1)
-o12.config(textvariable=sv12, state='readonly')
-out12=Label(text="cot:",font=('KaiTi',12,'bold'))
-out12.grid(row=19,column=0)
 
 #button function,角度/弧度的转换
 def h1():         #Angle and radian control button
@@ -170,25 +126,7 @@ def h2():
     sv6.set(cos_se_p(str))
     sv7.set(tan_se_p(str))
     sv8.set(cot_se_p(str))
-    
-    a = float(sv0.get()) #9~12c输出值
-    if bt1['text']=='弧度':
-        a = (a *180/np.pi) + 360   #所有函数输入角度，这里进行弧度角度转换
-    a = c_float(a)
-    sin = sin_se_c(a)
-    cos = cos_se_c(a)
-    tan = tan_se_c(a)
-    cot = cot_se_c(a)
-    
-    sin = ("%.16f" % sin)
-    cos = ("%.16f" % cos)
-    tan = ("%.16f" % tan)
-    cot = ("%.16f" % cot)
-    
-    sv9.set(sin)
-    sv10.set(cos)
-    sv11.set(tan)
-    sv12.set(cot)
+
 
 bt1=Button(root,text='角度',font=('KaiTi',12,'bold'),width=5,height=2,command=h1)
 bt1.grid(row=1,column=0,sticky='e')
@@ -196,5 +134,53 @@ bt1.grid(row=1,column=0,sticky='e')
 
 bt2=Button(text="计算",font=('KaiTi',12,'bold'),width=5,height=2, command=h2)
 bt2.grid(row=1,column=1,sticky='e')
+
+#--------------------------
+from Test_cos_se import test_cos
+from Test_sin_se import test_sin
+from Test_tan_se import test_tan
+from Test_cot_se import test_cot
+
+#清除所有界面的信息
+def clear_all():
+    sv0.set("")
+
+    sv1.set("")  # 1~4matlab输出值
+    sv2.set("")
+    sv3.set("")
+    sv4.set("")
+
+    sv5.set("")  # 5~8python输出值
+    sv6.set("")
+    sv7.set("")
+    sv8.set("")
+
+def test_all():
+    flag = np.zeros(8, dtype=float)
+    error = np.zeros(8, dtype=float)
+    error[0], flag[0] = eng.Test_sin_se(nargout=2)
+    error[1], flag[1] = eng.Test_cos_se(nargout=2)
+    error[2], flag[2] = eng.Test_tan_se(nargout=2)
+    error[3], flag[3] = eng.Test_cot_se(nargout=2)
+
+    flag[4], error[4] = test_sin()
+    flag[5], error[5] = test_cos()
+    flag[6], error[6] = test_tan()
+    flag[7], error[7] = test_cot()
+
+    dict_var = dict({0:sv1,1:sv2,2:sv3,3:sv4,4:sv5,
+                     5:sv6,6:sv7,7:sv8})
+    for i in range (8):
+        if flag[i]:
+            dict_var[i].set("AvgError: "+str('%.5f'%error[i]))
+        else:
+            dict_var[i].set("pass!")
+
+bt3=Button(root,text='清除',font=('KaiTi',12,'bold'),width=5,height=2,command=clear_all)
+bt3.grid(row=15,column=0,sticky = 'e' )
+
+bt4=Button(root,text='测试',font=('KaiTi',12,'bold'),width=5,height=2,command=test_all)
+bt4.grid(row=15,column=1,sticky = 'e' )
+
 
 root.mainloop()

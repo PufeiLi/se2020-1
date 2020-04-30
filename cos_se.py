@@ -21,7 +21,7 @@ def taylor(x,n):
         count+=1
     return a
 
-def cos_se(x):
+def cos_se_p(x):
     x = (x/180)*math.pi;
     return taylor(x,10)
 
