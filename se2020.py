@@ -5,6 +5,7 @@
 # sys.setdefaultencoding('utf8')
 
 from tkinter import *
+from tkinter import messagebox
 import numpy as np
 import matlab.engine
 from ctypes import *
@@ -114,13 +115,21 @@ def h1():         #Angle and radian control button
 
 #实现计算
 def h2():
-    str = float(sv0.get())
+    if (sv0.get() == ""):
+        messagebox.showwarning(title='FBI Warning', message='PLEASE INPUT A NUMBER！')
+    else:
+        try:
+            str = float(sv0.get())
+            str = str % 360
+        except:
+            messagebox.showerror(title='Error', message='请输入 < 99999999的数')
+
     if bt1['text']=='弧度':
         str = str * (180/np.pi)     #所有函数输入角度，这里进行弧度角度转换
-    sv1.set(eng.sin_se(str))    #1~4matlab输出值
+    sv1.set(eng.m_sin_se(str))    #1~4matlab输出值
     sv2.set(eng.cos_se(str))
-    sv3.set(eng.tan_se(str))
-    sv4.set(eng.cot_se(str))
+    sv3.set(eng.m_tan_se(str))
+    sv4.set(eng.m_cot_se(str))
     
     sv5.set(sin_se_p(str))      #5~8python输出值
     sv6.set(cos_se_p(str))

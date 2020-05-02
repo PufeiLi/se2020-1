@@ -14,7 +14,7 @@ T=length(a);
      
 for i=1:T %比较，计算错误的个数
     b(i)=tand(a(i));%标准值
-    c(i) = tan_se( a(i) );%测试值
+    c(i) = m_tan_se( a(i) );%测试值
     if abs(b(i))==Inf&&abs(c(i))==Inf %考虑a(i)取90的情况
          erro(i)=0;
      else

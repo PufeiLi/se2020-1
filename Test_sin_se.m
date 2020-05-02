@@ -14,7 +14,7 @@ T=length(a);
 
 for i=1:T %比较，计算错误的个数
     b(i)=sind(a(i)); %标准值
-    c(i) = sin_se( a(i) );%测试值
+    c(i) = m_sin_se( a(i) );%测试值
     erro(i)=abs(b(i)-c(i));%计算每次误差=|标准值-测试值|
 end
 for j=1:T
