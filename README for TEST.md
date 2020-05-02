@@ -48,22 +48,40 @@
        A、测试窗口显示结果正确，则表示函数测试误差小于0.001；
        B、测试窗口显示结果错误，误差大于0.001
 
+### **6.测试用例简述
+  - test1：输入非数字字符
+    - 输入非数字字符，点击计算没有结果，后台有报错
+    - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_character.png)
+    - 后台报错：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_error.png)
+    - 打补丁：----
+    - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_correct.bmp)
+  - test2：输入数字位数过长
+    - 输入5位数及以上，计算就会卡住
+    - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum.png)
+    - 打补丁：----
+    - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum_correct.bmp)
+  - test3：调用测试模块
+    - 初始测试结果：测试结果未全部通过，测试结果显示：matlab语言的sin tan cot 函数有报错，不满足误差小于0.001的要求
+    - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/Init_test_result.png)
+    - 打补丁：
+            - sin_se()：
+            - tan_se()：
+            - cot_se()：
+    - 测试通过：两种语言编写三角函数包的误差都小于0.001，测试全部通过，即界面显示pass！
+    - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
+
 ### **6.测试界面**
  
-- 测试界面如下：
-
+- 测试界面如下：![](https://github.com/PufeiLi/se2020-1/blob/test/Testing_interface.png)
 
 - 测试情况说明：
       
-      - 输入非数值：
+      - 输入非数字字符：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_correct.bmp)
+      
+      - 输入过长数值：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum_correct.bmp)
 
-      - 测试错误率：
+      - 测试误差：
 
-      - 测试成功界面：
+        - 测试成功界面：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
 
-      - 测试失败界面：
-
-      - 输入角度：
-![](https://github.com/PufeiLi/se2020-1/raw/test/1.png)
-      - 输入弧度：
-![](https://github.com/PufeiLi/se2020-1/raw/test/2.png)
+        - 测试失败界面：![](https://github.com/PufeiLi/se2020-1/blob/test/Init_test_result.png)
