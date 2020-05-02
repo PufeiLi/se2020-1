@@ -64,9 +64,9 @@
     - 初始测试结果：测试结果未全部通过，测试结果显示：matlab语言的sin tan cot 函数有报错，不满足误差小于0.001的要求
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/Init_test_result.png)
     - 打补丁：
-            - sin_se()：
-            - tan_se()：
-            - cot_se()：
+         - 1.sin_se()：
+         - 2.tan_se()：
+         - 3.cot_se()：
     - 测试通过：两种语言编写三角函数包的误差都小于0.001，测试全部通过，即界面显示pass！
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
 
@@ -76,12 +76,10 @@
 
 - 测试情况说明：
       
-      - 输入非数字字符：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_correct.bmp)
+      - 输入非数字字符：![](http://github.com/PufeiLi/se2020-1/blob/test/non-numeric_error.png)
       
       - 输入过长数值：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum_correct.bmp)
 
-      - 测试误差：
+      - 测试成功界面：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
 
-        - 测试成功界面：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
 
-        - 测试失败界面：![](https://github.com/PufeiLi/se2020-1/blob/test/Init_test_result.png)
