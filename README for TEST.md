@@ -48,29 +48,33 @@
        A、测试窗口显示结果正确，则表示函数测试误差小于0.001；
        B、测试窗口显示结果错误，误差大于0.001
 
-### **6.测试用例简述
+### **6.测试用例简述**
   - test1：输入非数字字符
-    - 输入非数字字符，点击计算没有结果，后台有报错
+    - 错误描述：输入非数字字符，点击计算没有结果，后台有报错
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_character.png)
     - 后台报错：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_error.png)
-    - 打补丁：----
+    - 解决方案：
+        - 1.弹窗提醒：“请输入 < 99999999的数” 
+        - 2.代码：`messagebox.showerror(title='Error', message='请输入 < 99999999的数')`
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/non-numeric_correct.bmp)
   - test2：输入数字位数过长
-    - 输入5位数及以上，计算就会卡住
+    - 错误描述：输入5位数及以上，计算就会卡住
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum.png)
-    - 打补丁：----
+    - 解决方案：
+        - 1.读取过长数值输入时，操作如下：将输入对2pi取余，则此值就可控制在0-360范围内
+        - 2.代码：`str = float(sv0.get())  str = str % 360`
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum_correct.bmp)
   - test3：调用测试模块
     - 初始测试结果：测试结果未全部通过，测试结果显示：matlab语言的sin tan cot 函数有报错，不满足误差小于0.001的要求
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/Init_test_result.png)
-    - 打补丁：
-         - 1.sin_se()：
-         - 2.tan_se()：
-         - 3.cot_se()：
+    - 解决方案：
+         - 1.sin_se()：修改源码，使用泰勒级数计算方式，实现sin()函数计算包，更新后代码为m_sin_se.m
+         - 2.tan_se()：直接调用m_sin_se和cos_se，更新后代码为m_tan_se.m
+         - 3.cot_se()：直接调用m_sin_se和cos_se，更新后代码为m_cot_se.m
     - 测试通过：两种语言编写三角函数包的误差都小于0.001，测试全部通过，即界面显示pass！
     - 图示：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
 
-### **6.测试界面**
+### **7.测试界面**
  
 - 测试界面如下：![](https://github.com/PufeiLi/se2020-1/blob/test/Testing_interface.png)
 
@@ -81,5 +85,15 @@
       - 输入过长数值：![](https://github.com/PufeiLi/se2020-1/blob/test/longnum_correct.bmp)
 
       - 测试成功界面：![](https://github.com/PufeiLi/se2020-1/blob/test/corr_test_result.bmp)
+
+- 测试操作：
+
+      - 点击界面的测试按钮，进行测试，根据测试结果框内的显示，判断三角函数程序包的可用性。
+        
+          - 1.全部显示pass！表示程序包满足误差率，测试通过。
+          - 2.个别测试框显示AvgError:平均误差率，表示程序包未全部满足误差率，测试未通过。
+        
+      - 点击清除按钮，界面恢复至初始界面，可选择再次进行测试或者计算
+
 
 
